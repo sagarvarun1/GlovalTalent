@@ -74,3 +74,4 @@ elif choice == "Leaderboard":
             st.markdown(f"**{row[1]}** by *{row[0]}* — ⭐ {row[2]}")
     else:
         st.info("No ratings yet! Start posting and rating talents.")
+
