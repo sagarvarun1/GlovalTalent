@@ -37,6 +37,32 @@ elif choice == "Post Your Talent":
     username = st.text_input("Enter your name:")
     skill = st.text_input("Skill Title:")
     desc = st.text_area("Describe your skill or project:")
+        # --- FILE UPLOAD SECTION ---
+    uploaded_file = st.file_uploader(
+        "Upload an Image or Video of your Talent:",
+        type=["jpg", "jpeg", "png", "mp4", "mov"],
+        help="Upload a photo or short video (Max size: 200MB)"
+    )
+
+    # --- SHOW PREVIEW IF FILE UPLOADED ---
+    if uploaded_file is not None:
+        file_ext = uploaded_file.name.split(".")[-1].lower()
+        if file_ext in ["jpg", "jpeg", "png"]:
+            st.image(uploaded_file, caption="Your uploaded image", use_container_width=True)
+        elif file_ext in ["mp4", "mov"]:
+            st.video(uploaded_file)
+        else:
+            st.warning("⚠️ Please upload only image or video files!")
+
+    # --- SUBMIT BUTTON ---
+    if st.button("Submit Talent"):
+        if username.strip() and skill.strip() and desc.strip():
+            st.success(f"✅ Thanks {username}! Your talent '{skill}' has been posted successfully.")
+            if uploaded_file is not None:
+                st.info("Your photo/video preview is shown above (temporary).")
+        else:
+            st.error("Please fill in all fields before submitting.")
+
     
     if st.button("Post"):
         if username and skill:
@@ -74,4 +100,5 @@ elif choice == "Leaderboard":
             st.markdown(f"**{row[1]}** by *{row[0]}* — ⭐ {row[2]}")
     else:
         st.info("No ratings yet! Start posting and rating talents.")
+
 
